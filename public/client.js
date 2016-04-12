@@ -70,21 +70,47 @@
   window.NoSleep = NoSleep;
 })(undefined);
 
+// ---------------------------------------------------------------------------------------------
+
 var LIMIT = 5;
 
 var noSleep = new NoSleep();
 
 var counter = 0;
 
-noSleep.enable();
+var $button = $('#button');
+var $tag = $('#tag');
 
-window.addEventListener('devicemotion', listener, false);
+$button.off('click').on('click', start);
+
+function start() {
+  noSleep.enable();
+  window.addEventListener('devicemotion', listener, true);
+  $button.text('Stop');
+  $button.off('click');
+  $button.on('click', stop);
+}
+
+function stop() {
+  window.removeEventListener('devicemotion', listener, true);
+  noSleep.disable;
+  $button.text('Start');
+  $button.off('click');
+  $button.on('click', start);
+}
 
 function listener(ev) {
   if (!ev.acceleration) return;
   counter++;
   if (counter % 100 == 0) {
-    document.getElementById('logs').innerHTML += JSON.stringify(ev, null, 2);
+    var event = {
+      x: ev.acceleration.x,
+      y: ev.acceleration.y,
+      z: ev.acceleration.z,
+      tag: $tag.val()
+    };
+    $.post('/event', event);
+    $('#logs').append("<p> " + event.x + " </p>");
   }
 }
 
