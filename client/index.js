@@ -77,8 +77,8 @@ const LIMIT = 5;
 const noSleep = new NoSleep();
 
 let counter = 0;
-
 let maxValue = 0;
+let values = [];
 
 const $button = $('#button');
 const $tag = $('#tag');
@@ -107,6 +107,11 @@ function getAbsoluteAcceleration(x, y, z) {
   return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
 }
 
+function getAvgValue(values) {
+  const sum = values.reduce((s, n) => s += n);
+  return sum / values.length;
+}
+
 function listener(event) {
   if (!event.acceleration) return;
   const acc = event.acceleration;
@@ -116,16 +121,20 @@ function listener(event) {
   const absAcceleration = getAbsoluteAcceleration(acc.x, acc.y, acc.z);
 
   maxValue = maxValue > absAcceleration ? maxValue : absAcceleration;
+  values.push(absAcceleration);
 
   counter++
   if (counter % 200 == 0) {
+    const avgValue = getAvgValue(values);
     const event = {
       maxValue: maxValue,
+      avgValue: avgValue,
       tag: $tag.val()
     }
     $.post('/event', event);
-    $('#logs').append( `<p> ${maxValue} </p>` );
+    $('#logs').append( `<p>max:${maxValue.toFixed(3)} avg: ${avgValue.toFixed(3)}</p>` );
     maxValue = 0;
+    values = [];
   }
 }
 
