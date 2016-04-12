@@ -78,6 +78,8 @@ const noSleep = new NoSleep();
 
 let counter = 0;
 
+let maxValue = 0;
+
 const $button = $('#button');
 const $tag = $('#tag');
 const $interval = $('#interval');
@@ -90,6 +92,7 @@ function start() {
   $button.text('Stop');
   $button.off('click')
   $button.on('click', stop);
+  maxValue = 0;
 }
 
 function stop() {
@@ -100,19 +103,29 @@ function stop() {
   $button.on('click', start);
 }
 
-function listener(ev) {
-  if (!ev.acceleration) return;
-  $interval.text(ev.interval);
+function getAbsoluteAcceleration(x, y, z) {
+  return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+}
+
+function listener(event) {
+  if (!event.acceleration) return;
+  const acc = event.acceleration;
+
+  $interval.text(event.interval);
+
+  const absAcceleration = getAbsoluteAcceleration(acc.x, acc.y, acc.z);
+
+  maxValue = maxValue > absAcceleration ? maxValue : absAcceleration;
+
   counter++
-  if (counter % 100 == 0) {
+  if (counter % 200 == 0) {
     const event = {
-      x: ev.acceleration.x,
-      y: ev.acceleration.y,
-      z: ev.acceleration.z,
+      maxValue: maxValue,
       tag: $tag.val()
     }
     $.post('/event', event);
-    $('#logs').append( `<p> ${event.x} </p>` );
+    $('#logs').append( `<p> ${maxValue} </p>` );
+    maxValue = 0;
   }
 }
 
