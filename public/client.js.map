@@ -1,0 +1,1 @@
+{"version":3,"sources":["../client/index.js"],"names":[],"mappings":";;AAAA,QAAQ,GAAR,CAAY,SAAZ;;AAGA,SAAS,cAAT,CAAwB,MAAxB,EAAgC,SAAhC,IAA6C,aAA7C","file":"client.js","sourcesContent":["console.log('working');\n\n\ndocument.getElementById('logs').innerHTML += 'HELLO WORLD';"]}
