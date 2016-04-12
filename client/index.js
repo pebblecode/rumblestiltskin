@@ -80,6 +80,7 @@ let counter = 0;
 
 const $button = $('#button');
 const $tag = $('#tag');
+const $interval = $('#interval');
 
 $button.off('click').on('click', start);
 
@@ -101,6 +102,7 @@ function stop() {
 
 function listener(ev) {
   if (!ev.acceleration) return;
+  $interval.text(ev.interval);
   counter++
   if (counter % 100 == 0) {
     const event = {
