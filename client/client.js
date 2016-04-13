@@ -1,24 +1,23 @@
-'use strict';
 
-var LIMIT = 5;
+const LIMIT = 5;
 
-var noSleep = new NoSleep();
+const noSleep = new NoSleep();
 
-var counter = 0;
-var maxValue = 0;
-var values = [];
+let counter = 0;
+let maxValue = 0;
+let values = [];
 
-var $button = $('#button');
-var $tag = $('#tag');
-var $interval = $('#interval');
+const $button = $('#button');
+const $tag = $('#tag');
+const $interval = $('#interval');
 
 $button.off('click').on('click', start);
 
 function start() {
-  noSleep.enable();
+  noSleep.enable(); 
   window.addEventListener('devicemotion', listener, true);
   $button.text('Stop');
-  $button.off('click');
+  $button.off('click')
   $button.on('click', stop);
   maxValue = 0;
 }
@@ -27,7 +26,7 @@ function stop() {
   window.removeEventListener('devicemotion', listener, true);
   noSleep.disable;
   $button.text('Start');
-  $button.off('click');
+  $button.off('click')
   $button.on('click', start);
 }
 
@@ -36,35 +35,37 @@ function getAbsoluteAcceleration(x, y, z) {
 }
 
 function getAvgValue(values) {
-  var sum = values.reduce(function (s, n) {
-    return s += n;
-  });
+  const sum = values.reduce((s, n) => s += n);
   return sum / values.length;
 }
 
 function listener(event) {
   if (!event.acceleration) return;
-  var acc = event.acceleration;
+  const acc = event.acceleration;
 
   $interval.text(event.interval);
 
-  var absAcceleration = getAbsoluteAcceleration(acc.x, acc.y, acc.z);
+  const absAcceleration = getAbsoluteAcceleration(acc.x, acc.y, acc.z);
 
   maxValue = maxValue > absAcceleration ? maxValue : absAcceleration;
   values.push(absAcceleration);
 
-  counter++;
+  counter++
   if (counter % 200 == 0) {
-    var avgValue = getAvgValue(values);
-    var _event = {
+    const avgValue = getAvgValue(values);
+    const event = {
       maxValue: maxValue,
       avgValue: avgValue,
       tag: $tag.val()
-    };
-    $.post('/event', _event);
-    $('#logs').append('<p>max:' + maxValue.toFixed(3) + ' avg: ' + avgValue.toFixed(3) + '</p>');
+    }
+    $.post('/event', event);
+    $('#logs').append( `<p>max:${maxValue.toFixed(3)} avg: ${avgValue.toFixed(3)}</p>` );
     maxValue = 0;
     values = [];
   }
 }
-//# sourceMappingURL=client.js.map
+
+
+
+
+

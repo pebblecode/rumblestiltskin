@@ -63,7 +63,7 @@ var newEvent = function newEvent(event) {
 
 var getEvents = function getEvents(cb) {
   dbConnect(function (conn) {
-    _rethinkdb2.default.table('phoneEvents').orderBy({ index: _rethinkdb2.default.desc('time') }).limit(20).run(conn, function (err, cursor) {
+    _rethinkdb2.default.table('phoneEvents').run(conn, function (err, cursor) {
       if (err) throw err;
       cursor.toArray(function (err, result) {
         if (err) throw err;
@@ -104,8 +104,16 @@ server.register(_inert2.default, function (err) {
     path: '/events',
     handler: function handler(request, reply) {
       getEvents(function (evs) {
-        reply(JSON.stringify(evs));
+        reply(evs);
       });
+    }
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/chart',
+    handler: function handler(request, reply) {
+      reply.file('public/chart.html');
     }
   });
 

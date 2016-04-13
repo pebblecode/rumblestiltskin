@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel index.js --out-file index-compiled.js && node index-compiled.js",
-    "devClient": "babel --source-maps --out-file public/client.js client/ --watch",
+    "devClient": "babel --source-maps --out-dir public/ client/ --watch",
     "deploy": "git push origin master && ssh -A -t gitlogger 'cd rumblestiltskin && git pull'"
   },
   "author": "Jon King",

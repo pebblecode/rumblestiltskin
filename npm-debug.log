@@ -1,0 +1,49 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/jonathan/.nvm/versions/node/v5.6.0/bin/node',
+1 verbose cli   '/Users/jonathan/.nvm/versions/node/v5.6.0/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'devClient' ]
+2 info using npm@3.6.0
+3 info using node@v5.6.0
+4 verbose run-script [ 'predevClient', 'devClient', 'postdevClient' ]
+5 info lifecycle rumblestiltskin@1.0.0~predevClient: rumblestiltskin@1.0.0
+6 silly lifecycle rumblestiltskin@1.0.0~predevClient: no script for predevClient, continuing
+7 info lifecycle rumblestiltskin@1.0.0~devClient: rumblestiltskin@1.0.0
+8 verbose lifecycle rumblestiltskin@1.0.0~devClient: unsafe-perm in lifecycle true
+9 verbose lifecycle rumblestiltskin@1.0.0~devClient: PATH: /Users/jonathan/.nvm/versions/node/v5.6.0/lib/node_modules/npm/bin/node-gyp-bin:/Users/jonathan/Code/rumblestiltskin/node_modules/.bin:/Users/jonathan/.rbenv/shims:/Users/jonathan/.nvm/versions/node/v5.6.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/jonathan/Code/go/bin:/Users/jonathan/Code/cassandra/bin
+10 verbose lifecycle rumblestiltskin@1.0.0~devClient: CWD: /Users/jonathan/Code/rumblestiltskin
+11 silly lifecycle rumblestiltskin@1.0.0~devClient: Args: [ '-c',
+11 silly lifecycle   'babel --source-maps --out-dir public/client.js client/ --watch' ]
+12 silly lifecycle rumblestiltskin@1.0.0~devClient: Returned: code: 1  signal: null
+13 info lifecycle rumblestiltskin@1.0.0~devClient: Failed to exec devClient script
+14 verbose stack Error: rumblestiltskin@1.0.0 devClient: `babel --source-maps --out-dir public/client.js client/ --watch`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (/Users/jonathan/.nvm/versions/node/v5.6.0/lib/node_modules/npm/lib/utils/lifecycle.js:232:16)
+14 verbose stack     at emitTwo (events.js:100:13)
+14 verbose stack     at EventEmitter.emit (events.js:185:7)
+14 verbose stack     at ChildProcess.<anonymous> (/Users/jonathan/.nvm/versions/node/v5.6.0/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+14 verbose stack     at emitTwo (events.js:100:13)
+14 verbose stack     at ChildProcess.emit (events.js:185:7)
+14 verbose stack     at maybeClose (internal/child_process.js:827:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+15 verbose pkgid rumblestiltskin@1.0.0
+16 verbose cwd /Users/jonathan/Code/rumblestiltskin
+17 error Darwin 15.3.0
+18 error argv "/Users/jonathan/.nvm/versions/node/v5.6.0/bin/node" "/Users/jonathan/.nvm/versions/node/v5.6.0/bin/npm" "run" "devClient"
+19 error node v5.6.0
+20 error npm  v3.6.0
+21 error code ELIFECYCLE
+22 error rumblestiltskin@1.0.0 devClient: `babel --source-maps --out-dir public/client.js client/ --watch`
+22 error Exit status 1
+23 error Failed at the rumblestiltskin@1.0.0 devClient script 'babel --source-maps --out-dir public/client.js client/ --watch'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the rumblestiltskin package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     babel --source-maps --out-dir public/client.js client/ --watch
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs rumblestiltskin
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls rumblestiltskin
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]

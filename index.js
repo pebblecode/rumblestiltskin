@@ -49,8 +49,6 @@ const newEvent = (event) => {
 const getEvents = (cb) => {
   dbConnect(conn => {
     r.table('phoneEvents')
-      .orderBy({ index: r.desc('time') })
-      .limit(20)
       .run(conn, function(err, cursor) {
         if (err) throw err;
         cursor.toArray(function(err, result) {
@@ -93,8 +91,16 @@ server.register(inert, (err) => {
     path: '/events',
     handler: function (request, reply) {
       getEvents(evs => {
-        reply(JSON.stringify(evs));
+        reply(evs);
       });
+    }
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/chart',
+    handler: function (request, reply) {
+      reply.file('public/chart.html');
     }
   });
 

@@ -1,9 +1,11 @@
+"use strict";
+
 /**
  * NoSleep.js v0.5.0 - git.io/vfn01
  * Rich Tibbett
  * MIT license
  **/
-(function(root) {
+(function (root) {
   // UA matching
   var ua = {
     Android: /Android/ig.test(navigator.userAgent),
@@ -23,7 +25,7 @@
   }
 
   // NoSleep instance constructor
-  var NoSleep = function() {
+  var NoSleep = function NoSleep() {
     if (ua.iOS) {
       this.noSleepTimer = null;
     } else if (ua.Android) {
@@ -40,10 +42,10 @@
   };
 
   // Enable NoSleep instance
-  NoSleep.prototype.enable = function(duration) {
+  NoSleep.prototype.enable = function (duration) {
     if (ua.iOS) {
       this.disable();
-      this.noSleepTimer = window.setInterval(function() {
+      this.noSleepTimer = window.setInterval(function () {
         window.location.href = '/';
         window.setTimeout(window.stop, 0);
       }, duration || 15000);
@@ -53,7 +55,7 @@
   };
 
   // Disable NoSleep instance
-  NoSleep.prototype.disable = function() {
+  NoSleep.prototype.disable = function () {
     if (ua.iOS) {
       if (this.noSleepTimer) {
         window.clearInterval(this.noSleepTimer);
@@ -66,79 +68,5 @@
 
   // Append NoSleep API to root object
   window.NoSleep = NoSleep;
-})(this);
-
-
-// ---------------------------------------------------------------------------------------------
-
-
-const LIMIT = 5;
-
-const noSleep = new NoSleep();
-
-let counter = 0;
-let maxValue = 0;
-let values = [];
-
-const $button = $('#button');
-const $tag = $('#tag');
-const $interval = $('#interval');
-
-$button.off('click').on('click', start);
-
-function start() {
-  noSleep.enable();
-  window.addEventListener('devicemotion', listener, true);
-  $button.text('Stop');
-  $button.off('click')
-  $button.on('click', stop);
-  maxValue = 0;
-}
-
-function stop() {
-  window.removeEventListener('devicemotion', listener, true);
-  noSleep.disable;
-  $button.text('Start');
-  $button.off('click')
-  $button.on('click', start);
-}
-
-function getAbsoluteAcceleration(x, y, z) {
-  return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
-}
-
-function getAvgValue(values) {
-  const sum = values.reduce((s, n) => s += n);
-  return sum / values.length;
-}
-
-function listener(event) {
-  if (!event.acceleration) return;
-  const acc = event.acceleration;
-
-  $interval.text(event.interval);
-
-  const absAcceleration = getAbsoluteAcceleration(acc.x, acc.y, acc.z);
-
-  maxValue = maxValue > absAcceleration ? maxValue : absAcceleration;
-  values.push(absAcceleration);
-
-  counter++
-  if (counter % 200 == 0) {
-    const avgValue = getAvgValue(values);
-    const event = {
-      maxValue: maxValue,
-      avgValue: avgValue,
-      tag: $tag.val()
-    }
-    $.post('/event', event);
-    $('#logs').append( `<p>max:${maxValue.toFixed(3)} avg: ${avgValue.toFixed(3)}</p>` );
-    maxValue = 0;
-    values = [];
-  }
-}
-
-
-
-
-
+})(undefined);
+//# sourceMappingURL=nosleep.js.map
